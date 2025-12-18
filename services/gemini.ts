@@ -14,38 +14,36 @@ const safeJsonParse = (text: string | undefined) => {
   }
 };
 
-// Kendidex Authority Guide System
+// User's exact Kendidex system for writing
 const KENDIDEX_SYSTEM_PROMPT = `
-You are a LinkedIn Growth Strategist for Kendidex. 
-YOUR JOB: Create "Cheat Sheet" style content that is so valuable people feel obligated to save it.
+You are a LinkedIn content writer for Kendidex, a company that provides automation systems for recruitment agencies.
+YOUR JOB: Generate high-performing LinkedIn posts that provide VALUE, build authority, and generate inbound interest from recruitment agency owners.
 
-POST PHILOSOPHY:
-- No fluff. No "Believe in yourself."
-- Pure math, logic, and frameworks.
-- Frame the problem in lost revenue ($).
-- Position automation as the unfair competitive advantage.
+CONTEXT:
+- Target audience: Recruitment agency owners/founders (5-200 employees)
+- Main pain points: Manual client acquisition, slow time-to-fill, wasted time on screening
+- Our solution: Automation for client acquisition, AI resume screening, automated scheduling
+- Goal: Position us as experts, not salespeople
 
-STRUCTURE:
-1. [HOOK]: A stark realization or data point.
-2. [THE GAP]: Why the old way is failing (manual prospecting, human error).
-3. [THE MULTIPLIER]: Specific numbers showing the ROI of automation.
-4. [THE GUIDE]: A step-by-step roadmap.
-5. [SOFT CTA]: Low-friction engagement question.
+POST STRUCTURE (FRAMEWORK):
+[HOOK - First 1-2 lines]
+[BODY - Main content with line breaks and formatting]
+[INSIGHT/SOLUTION - Brief mention]
+[CTA - Soft call-to-action]
+
+TONE & STYLE:
+✅ DO: Conversational, specific numbers, stories/examples, scannable, teaching not selling.
+❌ DON'T: Motivational fluff, unbelievable claims, too many emojis (1-2 max), wall of text, pitch directly.
 `;
 
-// THE "AUTHORITY INFOGRAPHIC" VISUAL SYSTEM
+// RESTORED: The "Perfect" High-End 3D Visual System
 const AUTHORITY_GRAPHIC_SYSTEM = `
-INFOGRAPHIC DESIGN SYSTEM:
-- AESTHETIC: High-end Technical Editorial. 
-- STYLE: Minimalist abstract 3D frameworks. Clean isometric grids, translucent glass panels, and geometric structural elements.
-- LIGHTING: Soft studio lighting, realistic shadows, depth of field.
-- PALETTE: Deep Charcoal (#0B0E14) base, with Vibrant Orange (#F97316) and Slate White accents.
-- ELEMENTS: 
-  - Structural glass pillars (Scale)
-  - Interlocking geometric loops (Systems)
-  - Sharp isometric floating grids (Data)
-  - Abstract blueprints (Roadmap)
-- RULE: ABSOLUTELY NO TEXT, LABELS, OR NUMBERS in the generated image. The UI will handle the text.
+ELITE VISUAL DESIGN SYSTEM (BIG CREATOR STYLE):
+- ABSOLUTE RULE: NO TEXT, NO LETTERS, NO NUMBERS in the image.
+- CORE AESTHETIC: High-contrast, cinematic "Dark Mode" dashboard style. 
+- PALETTE: Deep charcoal matte (#0F172A), neon cyan (#22D3EE), electric blue (#2563EB).
+- STYLE: Volumetric lighting, global illumination, shallow depth of field (bokeh), sharp 4k vector edges, premium glassmorphism.
+- CONCEPTS: Metaphorical 3D shapes representing Growth, Speed, Systems, or Scaling.
 `;
 
 export const CREATORS: CreatorProfile[] = [
@@ -53,21 +51,42 @@ export const CREATORS: CreatorProfile[] = [
     id: 'justin-welsh',
     name: "Justin Welsh",
     avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Justin",
-    description: "Solopreneur guide. High-value frameworks.",
-    instructions: "Style: Punchy, structured, 1-line paragraphs, heavy emphasis on 'The Result'."
+    description: "The Solopreneur Playbook. Punchy hooks, relatable enemy framing.",
+    instructions: "Follow Kendidex rules using Justin Welsh style: Relatable enemy framing, short lines, step-by-step list, TL;DR end."
+  },
+  {
+    id: 'alex-hormozi',
+    name: "Alex Hormozi",
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Alex",
+    description: "Direct, no-nonsense, tactical entrepreneurship.",
+    instructions: "Follow Kendidex rules using Hormozi style: Blunt facts, numbered lists, zero fluff, hard metrics."
+  },
+  {
+    id: 'lara-acosta',
+    name: "Lara Acosta",
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Lara",
+    description: "LinkedIn authority, engaging curiosity hooks.",
+    instructions: "Follow Kendidex rules using Acosta style: Curiosity hooks, standalone sentences, Upbeat tactical tone."
+  },
+  {
+    id: 'dan-koe',
+    name: "Dan Koe",
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Dan",
+    description: "Philosophical, high-concept mini-essays.",
+    instructions: "Follow Kendidex rules using Koe style: Philosophical essays, high-concept pillars, reflective tone."
   },
   {
     id: 'kleo-expert',
-    name: "Authority Guide",
+    name: "Kleo Expert",
     avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Kleo",
-    description: "The 'Ultimate Guide' formula. Dense, tactical, high-authority.",
-    instructions: "Style: The Cheat Sheet Master. Uses numbers, bullet points, and 'The Math' to build undeniable authority."
+    description: "The hybrid formula of all top 10 elite creators.",
+    instructions: "Follow Kendidex rules using Kleo Expert style: Best hybrid formulas of the top 10 LinkedIn voices."
   }
 ];
 
 export const generateFullPost = async (prompt: string, voice: CreatorProfile, context: OnboardingAnswers) => {
   const ai = getAI();
-  const contextStr = `BRAND INTEL: Niche: ${context.niche}, Audience: ${context.audience}, Tone: ${context.tone}.`;
+  const contextStr = `BRAND INTEL: Niche: ${context.niche}, Target: ${context.audience}, Tone: ${context.tone}, Goal: ${context.goals}.`;
   
   const response = await ai.models.generateContent({
     model: 'gemini-3-pro-preview',
@@ -76,14 +95,15 @@ export const generateFullPost = async (prompt: string, voice: CreatorProfile, co
     ${AUTHORITY_GRAPHIC_SYSTEM}
     ${contextStr}
     
-    TASK: Generate a viral "Cheat Sheet" post and an abstract structural visual prompt.
+    TASK: Generate a viral LinkedIn post and a high-status abstract visual prompt.
     USER REQUEST: "${prompt}"
+    CREATOR STYLE: "${voice.name} - ${voice.instructions}"
     
     Response Format (JSON):
     {
-      "explanation": "Why this framework works.",
-      "content": "Tactical post content...",
-      "imagePrompt": "Description for a high-end isometric abstract framework (glass, orange accents, minimalist). No text."
+      "explanation": "Psychology breakdown.",
+      "content": "Formatted post text...",
+      "imagePrompt": "Description for a PURELY VISUAL abstract 3D masterpiece. No text."
     }`,
     config: { responseMimeType: 'application/json' }
   });
@@ -95,20 +115,21 @@ export const chatEditPost = async (currentContent: string, instruction: string, 
   const response = await ai.models.generateContent({
     model: 'gemini-3-pro-preview',
     contents: `
-    Current Post: "${currentContent}"
-    Instruction: "${instruction}"
+    ${KENDIDEX_SYSTEM_PROMPT}
+    Current Post Content: "${currentContent}"
+    User Instruction: "${instruction}"
+    TASK: Act as the Kendidex Expert.
     
-    TASK: Update the post or visual prompt.
     Return JSON:
     {
-      "explanation": "Briefly state what changed.",
-      "content": "Updated content.",
+      "explanation": "Short conversational response.",
+      "content": "Updated post text.",
       "shouldUpdateImage": true/false,
-      "imagePromptOverride": "If true, provide a new high-end structural abstract prompt."
+      "imagePromptOverride": "If true, provide a NEW high-end abstract 3D prompt. NO TEXT."
     }`,
     config: { responseMimeType: 'application/json' }
   });
-  return safeJsonParse(response.text);
+  return safeJsonParse(response.text) || { explanation: "Updated.", content: currentContent, shouldUpdateImage: false };
 };
 
 export const generatePostImage = async (prompt: string) => {
@@ -116,7 +137,7 @@ export const generatePostImage = async (prompt: string) => {
   const response = await ai.models.generateContent({
     model: 'gemini-2.5-flash-image',
     contents: { 
-      parts: [{ text: `${prompt}. Style: Technical Editorial, minimalist 3D isometric, soft global illumination, charcoal and orange accents, premium materials, 8k. NO TEXT.` }] 
+      parts: [{ text: `${prompt}. Style: Elite Authority 3D Visual. High contrast cinematic lighting, charcoal matte background, neon cyan glassmorphism, raytracing, 8k. ABSOLUTELY NO TEXT.` }] 
     },
     config: { imageConfig: { aspectRatio: "1:1" } }
   });
@@ -124,24 +145,6 @@ export const generatePostImage = async (prompt: string) => {
     if (part.inlineData) return `data:image/png;base64,${part.inlineData.data}`;
   }
   return null;
-};
-
-export const generateCarouselDecks = async (postContent: string) => {
-  const ai = getAI();
-  const response = await ai.models.generateContent({
-    model: 'gemini-3-pro-preview',
-    contents: `Convert this post into a 7-slide "Ultimate Authority Guide" Carousel: "${postContent}". 
-    
-    CRITICAL:
-    - Slide 1: High-impact title (The Ultimate Guide to X).
-    - Slides 2-6: Deep tactical breakdown (The Problem, The Math, The System, Step-by-Step, The Result).
-    - Slide 7: The Recap & CTA.
-    - CONTENT: Each slide needs a Title and a list of 3-4 short tactical bullet points.
-    
-    Return JSON array: [{ "title": "...", "content": "Bullet 1\\nBullet 2\\nBullet 3", "visualPrompt": "Abstract structural metaphor for [slide theme]" }]`,
-    config: { responseMimeType: 'application/json' }
-  });
-  return safeJsonParse(response.text);
 };
 
 export const analyzeVirality = async (content: string): Promise<ViralScore | null> => {
@@ -158,7 +161,19 @@ export const generateHookLab = async (topic: string) => {
   const ai = getAI();
   const response = await ai.models.generateContent({
     model: 'gemini-3-flash-preview',
-    contents: `Generate 10 'Cheat Sheet' hooks for: "${topic}". JSON array {category, text}`,
+    contents: `Generate 10 Kendidex viral hooks for: "${topic}". JSON array {category, text}`,
+    config: { responseMimeType: 'application/json' }
+  });
+  return safeJsonParse(response.text);
+};
+
+export const generateCarouselDecks = async (postContent: string) => {
+  const ai = getAI();
+  const response = await ai.models.generateContent({
+    model: 'gemini-3-pro-preview',
+    contents: `Convert this LinkedIn post into a high-value 7-slide carousel: "${postContent}". 
+    Each slide must have a title, short punchy body, and a 3D visual prompt following the ELITE VISUAL DESIGN SYSTEM.
+    Return JSON array: [{ "title": "...", "content": "...", "visualPrompt": "..." }]`,
     config: { responseMimeType: 'application/json' }
   });
   return safeJsonParse(response.text);
