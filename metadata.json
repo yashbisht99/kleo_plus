@@ -1,0 +1,7 @@
+{
+  "name": "KleoPlus",
+  "description": "Premium LinkedIn content engine with AI writing, visual previews, and profile audits.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
